@@ -17,9 +17,9 @@ function text_to_speech()
 
 function get_response()
 {
-  prompt='{"prompt":"'$1'","model":"text-davinci-003","temperature":0,"max_tokens:4000}'
+  prompt='{"prompt":"'$1'","model":"text-davinci-003","temperature":0,"max_tokens":4000}'
   response=$(curl -s -X POST -H "Content-Type: application/json" -H "Authorization: Bearer $OPENAI_API" -d "$prompt" https://api.openai.com/v1/completions)
-  response_text=$(echo "response" |jq -r '.choices[0].text' |tail -n +2 2> /dev/null
+  response_text=$(echo "response" |jq -r '.choices[0].text' |tail -n +2 2)> /dev/null
   echo "$response_text"
   echo 
 }
@@ -29,7 +29,7 @@ function display_text()
   echo
   for (( L=0; L<${#1}; L++ ))
   do
-    echo -en "$$blue${1:$L:1}"
+    echo -en "$blue${1:$L:1}"
     sleep 0.055
   done
   echo
